@@ -139,7 +139,7 @@ const ModalContent = ({
               onClick={handleCopy}
             >
               <Icon
-                name={isCopied ? "paper-airplane" : "twitter"}
+                name={isCopied ? "copy-2" : "copy"}
                 className="text-inherit"
                 size={16}
               />

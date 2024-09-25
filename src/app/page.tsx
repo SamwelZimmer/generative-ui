@@ -1,82 +1,47 @@
 "use client";
 
-import { useState } from "react";
-import { toast } from "sonner";
-
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import Icon from "@/components/common/Icon";
 import Footer from "@/components/misc/Footer";
 import ExportButton from "@/components/misc/ExportButton";
-import { StylePresets } from "@/lib/types";
-import { STYLE_PRESETS } from "@/lib/data";
-import { useAppContext } from "@/components/providers/app-provider";
+import GenerationForm from "@/components/misc/GenerationForm";
+import BookCard from "@/components/examples/BookCard";
+import {
+  EXAMPLE_BOOK_ITEM,
+  EXAMPLE_NEWS_ARTICLE,
+  EXAMPLE_TESTIMONIAL,
+  EXAMPLE_TEXT_MESSAGES,
+} from "@/lib/data";
+import Messages from "@/components/examples/Messages";
+import NewsArticle from "@/components/examples/NewsArticle";
+import Testimonial from "@/components/examples/Testimonial";
+import DraggableContainer from "@/components/common/DraggableContainer";
 
 export default function Home() {
-  const [prompt, setPrompt] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-
-  const onSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    setIsLoading(true);
-
-    try {
-      // do ai logic
-      toast.success("Generation successful");
-    } catch (err) {
-      console.error(err);
-      toast.error("Ahhh... something went wrong");
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   return (
     <>
-      <div className="min-h-[calc(100vh-56px)] pt-[57px] flex items-center justify-center relative">
-        <form
-          onSubmit={onSubmit}
-          className="w-full max-w-sm flex items-center gap-2 px-6 sm:px-0"
-        >
-          <Input
-            value={prompt}
-            onChange={(e) => setPrompt(e.target.value)}
-            className="bg-card"
-            placeholder="e.g. a barbie theme..."
-          />
+      <div className="h-[calc(100dvh-56px)] w-screen fill-available pt-[57px] flex flex-col relative">
+        <div className="w-full flex justify-center h-max pb-2 relative">
+          <GenerationForm />
 
-          <Button
-            type="submit"
-            disabled={isLoading || prompt.length <= 0}
-            className="font-semibold aspect-square px-0"
-          >
-            {isLoading ? (
-              <Icon
-                name="spinner"
-                className="text-inherit animate-spin ease-in-out duration-1000"
-              />
-            ) : (
-              <Icon name="paper-airplane" className="text-inherit w-max" />
-            )}
-          </Button>
-        </form>
+          <div className="absolute top-full z-20 left-0 w-full h-4 bg-gradient-to-b from-background to-transparent" />
+        </div>
+
+        <DraggableContainer className="grid gap-2 grid-cols-[repeat(auto-fill,minmax(0,448px))] justify-center px-6 py-6">
+          <div className="relative space-y-2 w-full">
+            <BookCard data={EXAMPLE_BOOK_ITEM} className="w-full" />
+            <Testimonial data={EXAMPLE_TESTIMONIAL} className="w-full" />
+          </div>
+
+          <div className="relative w-full">
+            <Messages data={EXAMPLE_TEXT_MESSAGES} className="w-full" />
+          </div>
+
+          <div className="relative w-full">
+            <NewsArticle data={EXAMPLE_NEWS_ARTICLE} className="w-full p-4" />
+          </div>
+        </DraggableContainer>
 
         <div className="absolute bottom-6 right-6">
           <ExportButton />
-        </div>
-      </div>
-
-      <div className="fixed top-6 left-1/2 -translate-x-1/2 flex gap-2 w-full max-w-sm mx-auto">
-        <div className="relative overflow-hidden">
-          <div className="absolute left-0  h-full w-6 bg-gradient-to-r from-background to-transparent" />
-          <div className="absolute right-0 h-full w-6 bg-gradient-to-l from-background to-transparent" />
-
-          <div className="flex items-center w-full gap-2 overflow-scroll hidden-scrollbar px-6">
-            {Object.keys(STYLE_PRESETS).map((style, i) => (
-              <PresetStyleChip key={i} style={style as StylePresets} />
-            ))}
-          </div>
         </div>
       </div>
 
@@ -84,25 +49,3 @@ export default function Home() {
     </>
   );
 }
-
-interface PresetStyleChipProps {
-  style: StylePresets;
-}
-
-const PresetStyleChip = ({ style }: PresetStyleChipProps) => {
-  const { setStyles } = useAppContext();
-
-  const handleClick = () => {
-    setStyles(STYLE_PRESETS[style]);
-  };
-
-  return (
-    <Button
-      onClick={handleClick}
-      variant="secondary"
-      className="text-xs h-6 capitalize"
-    >
-      {style}
-    </Button>
-  );
-};

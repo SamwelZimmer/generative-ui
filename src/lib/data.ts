@@ -1,4 +1,10 @@
-import { Styles } from "@/lib/types";
+import {
+  BookItem,
+  MessageItem,
+  NewsArticleItem,
+  TestimonialItem,
+  Styles,
+} from "@/lib/types";
 
 const DEFAULT_STYLES: Styles = {
   "--background": "240 10% 3.9%",
@@ -187,4 +193,48 @@ export const STYLE_PRESETS = {
   ocean: OCEAN_STYLES,
   techno: TECHNO_STYLES,
   forest: FOREST_STYLES,
+};
+
+export const EXAMPLE_BOOK_ITEM: BookItem = {
+  title: "Atlas Shrugged",
+  author: "Ayn Rand",
+  rating: 3.3,
+  description:
+    "A philosophical novel that explores the role of the mind in man's existence and the consequences of abandoning intellectual achievement.",
+  isFictional: true,
+  yearPublished: 1957,
+};
+
+export const EXAMPLE_TEXT_MESSAGES: MessageItem[] = [
+  {
+    content:
+      "Hey, have you checked out that new SaaS tool for developers? It's amazing for creating realistic datasets!",
+    sent_by_user: false,
+  },
+  {
+    content: "No, I haven't! What's it called?",
+    sent_by_user: true,
+  },
+  {
+    content:
+      "It's called WantData. It lets you design and implement placeholders that look super realistic.",
+    sent_by_user: false,
+  },
+];
+
+export const EXAMPLE_NEWS_ARTICLE: NewsArticleItem = {
+  body: "Stock markets around the world experienced a surge today following the release of positive economic data from several major economies.",
+  date: "2023-12-01",
+  type: "business",
+  author: "Emily Tran",
+  headline: "Global Markets Rally on Positive Economic Indicators",
+  readTime: 3,
+};
+
+export const EXAMPLE_TESTIMONIAL: TestimonialItem = {
+  name: "Alice Johnson",
+  text: "This tool has revolutionized the way I create mockups for my projects. Highly recommend for any designer looking for realistic data sets!",
+  social: "twitter",
+  username: "alicej",
+  img: "https://randomuser.me/api/portraits/women/87.jpg",
 };
